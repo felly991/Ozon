@@ -1,5 +1,6 @@
 ﻿
-/// case 1
+
+
 //int number = Convert.ToInt32(Console.ReadLine());
 //List<int[]> list = new List<int[]>();
 //string line;
@@ -257,3 +258,40 @@
 //}
 //string s = "{()}{[]{}}";
 //Console.WriteLine(IsValid(s));
+using System.Diagnostics;
+
+/// case 1
+int[,] array = new int[3, 5] { { -1, 2, 4, 5, 6 }, { 2, 4, 5, 6, 7 }, { 5, 6, 7, 8, 15 } };
+int key1 = 15;
+int key2 = -1;
+Console.WriteLine(First(key1, array));
+Console.WriteLine(First(key2, array));
+Console.WriteLine(Second(key1, array));
+Console.WriteLine(Second(key2, array));
+//Метод обхода за O(n)
+bool First(int key, int[,] array)
+{
+    int i = 0;
+    for (int j = array.GetLength(1) - 1; j >= 0; j--)
+    {
+        if (key > array[i, j] && array.GetLength(0) - 1 != i)
+        {
+            i++;
+            j++;
+            continue;
+        }
+        else if (array[i, j] == key)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+//Обход с преобразованием в лист
+bool Second(int key, int[,] array)
+{
+    var result = array.Cast<int>().Select(c => c).ToList();
+    return result.Contains(key);
+}
+
